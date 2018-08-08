@@ -19,9 +19,10 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.gender }}</td>
                 <td>
-                  <a href="edit.html">edit</a>
+                  <!-- <a href="edit.html">edit</a> -->
+                  <router-link :to="'/hero/edit/'+item.id">edit</router-link>
                   &nbsp;&nbsp;
-                  <a href="javascript:window.confirm('Are you sure?')">delete</a>
+                  <a @click.prevent="handelDel(item.id)" href="javascript:void(0)">delete</a>
                 </td>
               </tr>
             </tbody>
@@ -48,7 +49,22 @@ export default {
         .get("http://localhost:3000/heroes")
         .then(response => {
           if (response.status === 200) {
-            this.list = response.data
+            this.list = response.data;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    handelDel(id) {
+      if (!confirm("Are you sure")) {
+        return;
+      }
+      axios
+        .delete(`http://localhost:3000/heroes/${id}`)
+        .then(response => {
+          if (response.status === 200) {
+            this.loadData();
           }
         })
         .catch(err => {
