@@ -9,6 +9,7 @@ import HeroList from '../views/hero/List.vue';
 import WeaponList from '../views/weapon/List.vue';
 import EquipList from '../views/Equip/List.vue';
 var router = new VueRouter({
+    linkActiveClass:'active',
     routes: [
         {path:'/',redirect:'/hero'},
         {name:'hero',path:'/hero',component:HeroList},
